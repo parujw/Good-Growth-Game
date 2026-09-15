@@ -184,6 +184,41 @@
   .legend-name{flex:1;}
   .legend-pct{font-family:'Kanit',sans-serif; font-weight:600; color:var(--ink-soft);}
 
+  .qr-cta{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-top:26px;
+    padding:18px;
+    border-radius:14px;
+    background:var(--ink);
+    color:#fff;
+  }
+  .qr-cta-text{flex:1; min-width:0;}
+  .qr-cta-title{
+    font-family:'Kanit',sans-serif;
+    font-weight:600;
+    font-size:16.5px;
+    line-height:1.45;
+    margin:0 0 6px;
+    text-wrap:balance;
+  }
+  .qr-cta-desc{font-size:14px; line-height:1.55; margin:0; color:#b9c2d4;}
+  .qr-cta-desc .nowrap{white-space:nowrap;}
+  .qr-cta-tile{
+    background:#fff;
+    border-radius:10px;
+    padding:8px;
+    flex-shrink:0;
+    line-height:0;
+  }
+  .qr-cta-tile img{width:140px; height:140px; max-width:100%; display:block;}
+  @media (max-width:470px){
+    .qr-cta{flex-direction:column; align-items:stretch; text-align:center;}
+    .qr-cta-tile{align-self:center;}
+    .qr-cta-tile img{width:172px; height:172px;}
+  }
+
   .actions{display:flex; gap:12px; margin-top:28px; flex-wrap:wrap;}
   .copied-note{font-size:13px; color:var(--ink-soft); margin-top:8px; height:16px;}
 </style>
@@ -628,6 +663,16 @@ function renderResult(){
       <p class="section-label">แผนที่พลังความยั่งยืนของคุณ</p>
       <div class="radar-wrap">${buildRadarSVG(data)}</div>
       <div class="legend">${legend}</div>
+
+      <div class="qr-cta">
+        <div class="qr-cta-text">
+          <p class="qr-cta-title">อยากรู้เกี่ยวกับความยั่งยืนมากขึ้นใช่มั้ย?</p>
+          <p class="qr-cta-desc">สแกนเพื่อเข้าเรียนรู้ Sustainability สำหรับทุกคนผ่าน <span class="nowrap">E-learning</span> ได้เลย</p>
+        </div>
+        <div class="qr-cta-tile">
+          <img src="qr-elearning.png" alt="QR code สำหรับเข้าเรียน E-learning ด้านความยั่งยืน" width="792" height="792">
+        </div>
+      </div>
 
       <div class="actions">
         <button class="btn" id="restartBtn">ทำอีกครั้ง</button>
