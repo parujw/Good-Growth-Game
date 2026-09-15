@@ -174,7 +174,7 @@
   .section-label{font-family:'Kanit',sans-serif; font-size:13px; font-weight:600; color:var(--ink-soft); margin:26px 0 6px;}
 
   .radar-wrap{display:flex; justify-content:center; margin:6px 0 4px;}
-  .radar-wrap svg{width:100%; max-width:360px; height:auto;}
+  .radar-wrap svg{width:100%; max-width:388px; height:auto;}
   .radar-label{font-family:'Sarabun',sans-serif; font-weight:600;}
   .radar-pct{font-family:'Kanit',sans-serif; font-weight:600;}
 
@@ -623,7 +623,7 @@ function buildRadarSVG(data){
   }).join('');
 
   return `
-    <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="-34 0 388 320" xmlns="http://www.w3.org/2000/svg">
       ${gridPolys}
       ${spokes}
       <polygon points="${dataPts}" fill="var(--blue)" fill-opacity="0.22" stroke="var(--blue)" stroke-width="2"/>
