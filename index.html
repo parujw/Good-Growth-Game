@@ -197,22 +197,24 @@
   .character-wrap{display:flex; justify-content:center; margin:6px 0 14px;}
   .character-wrap svg{width:190px; height:auto;}
   .result-body p{font-size:16px; margin:0 0 16px;}
-  .project-box{
+  .work-box{
     background:var(--paper);
     border:1px solid var(--line);
-    border-left:3px solid var(--blue);
+    border-left:4px solid var(--blue);
     border-radius:8px;
     padding:12px 14px;
     margin:2px 0 4px;
   }
-  .project-label{
+  .work-label{
     font-family:'Kanit',sans-serif;
-    font-size:12px;
+    font-size:14px;
     font-weight:600;
+    line-height:1.4;
     color:var(--blue);
-    margin:0 0 4px;
+    margin:0 0 6px;
   }
-  .project-text{font-size:14.5px; margin:0; color:var(--ink-soft);}
+  .work-text{font-size:14.5px; margin:0; color:var(--ink-soft);}
+  .work-text strong{font-weight:600; color:var(--ink);}
   .section-label{font-family:'Kanit',sans-serif; font-size:13px; font-weight:600; color:var(--ink-soft); margin:26px 0 6px;}
 
   .radar-wrap{display:flex; justify-content:center; margin:6px 0 4px;}
@@ -315,7 +317,7 @@
     .result-title-eyebrow{font-size:15px;}
     .character-wrap svg{width:250px;}
     .result-body p{font-size:18px;}
-    .project-text{font-size:16px;}
+    .work-text{font-size:16px;}
     .section-label{font-size:15px;}
     .radar-wrap svg{max-width:100%;}
     .legend-row{font-size:17px;}
@@ -383,7 +385,7 @@ const TRACKS = {
     hairF:"bob",
     mission:"คุณมองภาพรวมระยะยาว ชั่งน้ำหนักความเสี่ยงกับผลตอบแทนก่อนตัดสินใจทุกครั้ง และหาวิธีบริหารทรัพยากรให้ธุรกิจโตได้แบบมีฐานมั่นคง",
     help:"คุณคือคนที่ทำให้ “โตไว” กับ “โตอย่างยั่งยืน” ไปด้วยกันได้ ไม่ใช่โตแบบเสี่ยงเกินตัว",
-    project:"Internal Carbon Price และ Sustainability-Linked Financing Framework — เครื่องมือที่ ปตท. ใช้ประเมินความคุ้มค่าและความเสี่ยงก่อนตัดสินใจลงทุนทุกครั้ง",
+    work:"วางแผนกลยุทธ์และการลงทุน โดยมองทั้ง <strong>โอกาส ความเสี่ยง ESG และผลกระทบระยะยาว</strong> ก่อนตัดสินใจ",
     prop:`<g transform="translate(178,55) rotate(-15)">
       <circle cx="20" cy="25" r="20" fill="#dfe2e6" stroke="#20264a" stroke-width="2"/>
       <circle cx="20" cy="25" r="14" fill="#3e4c8a"/>
@@ -403,7 +405,7 @@ const TRACKS = {
     hairF:"tie",
     mission:"คุณพาไอเดียความยั่งยืนลงมาอยู่หน้างานจริง ลดการใช้พลังงานและของเสีย พร้อมเลือกของ-เลือกคู่ค้าอย่างมีความรับผิดชอบ",
     help:"คุณคือมือที่ทำให้ความยั่งยืนไม่ใช่แค่คำพูด แต่เกิดขึ้นจริงตั้งแต่ต้นน้ำถึงปลายน้ำ",
-    project:"โครงการ Opti-Fuel ที่เพิ่มประสิทธิภาพการใช้เชื้อเพลิงด้วยความร้อนเหลือทิ้ง (WHRU) และ Green Procurement ที่ลดคาร์บอนจริงในกระบวนการผลิต",
+    work:"ปรับปรุงกระบวนการทำงานให้ <strong>ใช้ทรัพยากรและพลังงานอย่างมีประสิทธิภาพ</strong> ลดของเสียและการปล่อย GHG",
     prop:`<g transform="translate(174,48) rotate(-15)">
       <rect x="13" y="6" width="11" height="42" rx="5.5" fill="#dfe2e6" stroke="#7a4419" stroke-width="2"/>
       <circle cx="18.5" cy="9" r="10" fill="none" stroke="#dfe2e6" stroke-width="7"/>
@@ -423,7 +425,7 @@ const TRACKS = {
     hairF:"bob",
     mission:"คุณห่วงใยคนรอบตัว เติมความรู้ ทักษะ และดูแลความเป็นอยู่ของทุกคน เพราะองค์กรจะไปได้ไกลก็ต่อเมื่อคนเติบโตไปด้วยกัน",
     help:"คุณคือคนที่ทำให้ทุกคนในทีมรู้สึกว่าตัวเองสำคัญและอยากเติบโตต่อ",
-    project:"SM Academy (Sustainability Culture 101 / Strategy 102) และ Good Growth Challenge ที่พัฒนาความรู้และทักษะให้พนักงานทุกคน",
+    work:"พัฒนาความรู้และทักษะ ดูแล <strong>คุณภาพชีวิต ความปลอดภัย และความเป็นอยู่ที่ดี</strong> ของพนักงาน เพื่อให้คนพร้อมเติบโตไปกับองค์กร",
     prop:`<g transform="translate(176,56) rotate(-8)">
       <path d="M20 44 C0 28 0 9 14 5 C19 3.5 20 11 20 13 C20 11 21 3.5 26 5 C40 9 40 28 20 44 Z" fill="#e85c6b" stroke="#8a2b3b" stroke-width="2"/>
       </g>`
@@ -440,7 +442,7 @@ const TRACKS = {
     hairF:"tie",
     mission:"คุณสื่อสารเรื่องดี ๆ ให้คนเข้าใจและเชื่อใจ ทำให้ความพยายามด้านความยั่งยืนถูกมองเห็นและอยากมีส่วนร่วม",
     help:"คุณคือเสียงที่ทำให้เรื่องยาก ๆ กลายเป็นเรื่องที่ทุกคนอินไปด้วยกัน",
-    project:"แคมเปญ Good Growth (โตได้ โตดี) และงาน SPIRIT DAY ที่สื่อสารเรื่องความยั่งยืนให้คนทั้งองค์กรเข้าใจและอยากมีส่วนร่วม",
+    work:"สื่อสารและเปิดเผยข้อมูลอย่างโปร่งใส ทำให้เรื่องความยั่งยืนเข้าใจง่าย และสร้างการมีส่วนร่วมกับผู้มีส่วนได้ส่วนเสีย",
     prop:`<g transform="translate(174,52) rotate(-12)">
       <path d="M6 30 L6 20 L30 4 L30 46 L6 30 Z" fill="#e0a233" stroke="#8a5c14" stroke-width="2"/>
       <rect x="-1" y="23" width="8" height="14" rx="2.5" fill="#c9861f"/>
@@ -459,7 +461,7 @@ const TRACKS = {
     hairF:"bob",
     mission:"คุณเป็นรั้วที่ทำให้ทุกอย่างถูกต้อง โปร่งใส และปลอดภัย ตั้งแต่สัญญา กฎระเบียบ ไปจนถึงความปลอดภัยหน้างาน",
     help:"คุณคือคนที่ทำให้การเติบโตขององค์กรมีรากฐานที่มั่นคง และทำให้ทุกคนกลับบ้านอย่างปลอดภัย",
-    project:"งานด้าน GRC (Governance, Risk, Compliance) และ QSSHE ที่กำกับดูแลให้ทุกกิจกรรมของ ปตท. ถูกต้อง โปร่งใส และปลอดภัย",
+    work:"ดูแล <strong>กฎหมาย จริยธรรม ธรรมาภิบาล ความเสี่ยง และความปลอดภัย</strong> เพื่อให้องค์กรเติบโตอย่างรับผิดชอบและมั่นคง",
     prop:`<g transform="translate(178,55) rotate(-15)">
       <path d="M20 0 L38 8 L38 26 C38 40 28 48 20 52 C12 48 2 40 2 26 L2 8 Z" fill="#dfe2e6" stroke="#1f574d" stroke-width="2"/>
       <path d="M20 6 L34 12 L34 26 C34 37 26 44 20 47 Z" fill="#2f7566"/>
@@ -882,9 +884,9 @@ function renderResult(){
       <div class="result-body">
         <p>${top.mission}</p>
         <p style="font-weight:600;">${top.help}</p>
-        <div class="project-box">
-          <p class="project-label">เกี่ยวข้องกับโปรเจกต์จริงของ ปตท.</p>
-          <p class="project-text">${top.project}</p>
+        <div class="work-box" style="border-left-color:${topColor}">
+          <p class="work-label" style="color:${topColor}">งานของคุณ ก็สร้าง Good Growth ได้ 🌱</p>
+          <p class="work-text">${top.work}</p>
         </div>
       </div>
 
@@ -922,7 +924,8 @@ function renderResult(){
 
 function copyResult(data, top){
   const statLine = data.map(d=> `${TRACKS[d.key].name} ${d.pct}%`).join(' · ');
-  const text = `ผลทดสอบ: ฉันเป็นคนยั่งยืนสาย “${top.persona}” (${top.name}) 🌱\n${statLine}\nเกี่ยวข้องกับ: ${top.project}`;
+  const work = top.work.replace(/<[^>]+>/g, '');
+  const text = `ผลทดสอบ: ฉันเป็นคนยั่งยืนสาย “${top.persona}” (${top.name}) 🌱\n${statLine}\nงานของคุณ ก็สร้าง Good Growth ได้: ${work}`;
   const note = document.getElementById('copyNote');
   if(navigator.clipboard && navigator.clipboard.writeText){
     navigator.clipboard.writeText(text)
