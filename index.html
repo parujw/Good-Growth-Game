@@ -43,6 +43,7 @@
     user-select:none;
   }
   .copied-note{user-select:text;}
+  .nowrap{white-space:nowrap;}
   .stage{width:100%; max-width:620px;}
 
   .flag{
@@ -236,7 +237,6 @@
     text-wrap:balance;
   }
   .qr-cta-desc{font-size:14px; line-height:1.55; margin:0; color:#b9c2d4;}
-  .qr-cta-desc .nowrap{white-space:nowrap;}
   .qr-cta-scan{
     font-family:'Kanit',sans-serif;
     font-size:12.5px;
@@ -585,7 +585,7 @@ function renderIntro(){
   app.innerHTML = `
     <p class="brand">GOOD GROWTH · โตได้ โตดี</p>
     <h1>คุณเป็นคนยั่งยืนสายไหน?</h1>
-    <p class="sub">8 คำถามง่าย ๆ เล่นสนุก ๆ ตอบตามสัญชาตญาณ แล้วมาดู “แผนที่พลัง” ของคุณว่าแต่ละด้านแข็งแรงแค่ไหน — เหมือนสเตตัสตัวละครในเกม</p>
+    <p class="sub">สนุกไปกับแบบทดสอบบุคลิกภาพความยั่งยืน เพื่อดูว่าคุณเป็นคนยั่งยืน<span class="nowrap">แบบไหน</span> ตอบแค่ 8 ข้อตามที่รู้สึกจริง ๆ ใช้เวลาไม่ถึง 2 นาที</p>
     <div class="intro-art">${chips}</div>
     <div class="actions" style="margin-top:0;">
       <button class="btn" id="startBtn">เริ่มทำแบบทดสอบ</button>
