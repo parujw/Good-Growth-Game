@@ -45,6 +45,7 @@
   .copied-note{user-select:text;}
   .nowrap{white-space:nowrap;}
   .stage{width:100%; max-width:620px;}
+  @media (min-width:1024px){ .stage{margin-block:auto;} }
 
   .flag{
     position:relative;
@@ -80,7 +81,18 @@
     color:var(--ink-soft);
     font-size:16px;
     max-width:52ch;
-    margin:0 0 28px;
+    margin:0 0 14px;
+  }
+  .meta-tags{display:flex; gap:8px; margin:0 0 22px;}
+  .meta-tag{
+    font-family:'Kanit',sans-serif;
+    font-size:13px;
+    font-weight:500;
+    color:var(--ink-soft);
+    background:var(--card);
+    border:1.5px solid var(--line);
+    padding:5px 14px;
+    border-radius:999px;
   }
 
   .btn{
@@ -268,7 +280,9 @@
     .flag{height:18px; margin-bottom:28px;}
     .brand{font-size:16px;}
     h1{font-size:clamp(38px,3.8vw,54px);}
-    .sub{font-size:20px; max-width:58ch; margin-bottom:34px;}
+    .sub{font-size:20px; max-width:58ch; margin-bottom:16px;}
+    .meta-tags{gap:10px; margin-bottom:26px;}
+    .meta-tag{font-size:15px; padding:7px 17px;}
     .chip{font-size:15px; padding:8px 16px;}
     .btn{font-size:20px; padding:20px 38px; border-radius:14px;}
 
@@ -315,6 +329,52 @@
 
     .actions{gap:16px; margin-top:34px;}
     .copied-note{font-size:15px;}
+  }
+
+  /* A booth laptop is usually 1440px or wider. Give the card the width and
+     the type size that screen actually has, instead of a 1060px column
+     floating in the middle of it. */
+  @media (min-width:1400px){
+    body{padding:48px 40px;}
+    .stage{max-width:1280px;}
+    .flag{height:22px; margin-bottom:34px;}
+    .brand{font-size:18px;}
+    h1{font-size:clamp(46px,3.6vw,60px);}
+    .sub{font-size:23px; max-width:56ch; margin-bottom:20px;}
+    .meta-tags{gap:12px; margin-bottom:32px;}
+    .meta-tag{font-size:17px; padding:8px 20px;}
+    .chip{font-size:17px; padding:9px 18px;}
+    .btn{font-size:23px; padding:24px 46px; border-radius:16px;}
+
+    .card{padding:40px 52px; border-radius:26px;}
+    .dot{height:10px;}
+    .qnum{font-size:18px; margin-bottom:16px;}
+    .scenario{font-size:34px; margin-bottom:32px;}
+    .options{gap:18px;}
+    .opt{min-height:108px; font-size:22px; padding:24px 28px; gap:20px; border-radius:18px;}
+    .opt-num{width:46px; height:46px; border-radius:14px; font-size:23px;}
+
+    .result-cols{gap:48px;}
+    .result-title{font-size:42px;}
+    .result-track{font-size:20px;}
+    .result-title-eyebrow{font-size:17px;}
+    .character-wrap svg{width:min(300px, 22vh);}
+    .result-body p{font-size:20px; margin-bottom:12px;}
+    .result-detail{font-size:19px;}
+    .section-label{font-size:17px;}
+    .work-label{font-size:18px;}
+    .work-text{font-size:18px;}
+    .work-box{padding:16px 20px;}
+    .legend-row{font-size:20px;}
+    .legend-dot{width:15px; height:15px;}
+    .qr-cta-title{font-size:22px;}
+    .qr-cta-desc{font-size:18px;}
+    .qr-cta-scan{font-size:16px;}
+    .section-label{margin:16px 0 4px;}
+    .legend{gap:9px; margin-top:14px;}
+    .qr-cta{margin-top:18px;}
+    .qr-cta-tile img{width:min(180px, 17vh); height:min(180px, 17vh);}
+    .radar-wrap svg{max-width:min(100%, 36vh);}
   }
 
   /* Booth laptops are wide but short (1366x768 is the common one). Tighten
@@ -585,7 +645,11 @@ function renderIntro(){
   app.innerHTML = `
     <p class="brand">GOOD GROWTH · โตได้ โตดี</p>
     <h1>คุณเป็นคนยั่งยืนสายไหน?</h1>
-    <p class="sub">สนุกไปกับแบบทดสอบบุคลิกภาพความยั่งยืน เพื่อดูว่าคุณเป็นคนยั่งยืน<span class="nowrap">แบบไหน</span> ตอบแค่ 8 ข้อตามที่รู้สึกจริง ๆ ใช้เวลาไม่ถึง 2 นาที</p>
+    <p class="sub">สนุกไปกับแบบทดสอบบุคลิกภาพความยั่งยืน เพื่อดูว่าคุณเป็นคนยั่งยืน<span class="nowrap">แบบไหน</span></p>
+    <div class="meta-tags">
+      <span class="meta-tag">8 ข้อ</span>
+      <span class="meta-tag">2 นาที</span>
+    </div>
     <div class="intro-art">${chips}</div>
     <div class="actions" style="margin-top:0;">
       <button class="btn" id="startBtn">เริ่มทำแบบทดสอบ</button>
