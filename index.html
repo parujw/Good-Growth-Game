@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คุณเป็นคนยั่งยืนสายไหน?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#132038;
+    --ink-soft:#4a5568;
+    --paper:#faf9f5;
+    --card:#ffffff;
+    --line:#e6e2d8;
+    --blue:#0072bc;
+
+    --c-planning:#3e4c8a;
+    --c-action:#e8702a;
+    --c-people:#e85c6b;
+    --c-story:#e0a233;
+    --c-guardian:#2f7566;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Sarabun',sans-serif;
+    min-height:100vh;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    padding:32px 16px 64px;
+    line-height:1.6;
+  }
+  .stage{width:100%; max-width:620px;}
+
+  .flag{
+    position:relative;
+    height:14px;
+    display:flex;
+    border-radius:3px;
+    overflow:hidden;
+    margin-bottom:22px;
+  }
+  .flag span{flex:1;}
+  .flag span:nth-child(1){background:var(--c-planning);}
+  .flag span:nth-child(2){background:var(--c-action);}
+  .flag span:nth-child(3){background:var(--c-people);}
+  .flag span:nth-child(4){background:var(--c-story);}
+  .flag span:nth-child(5){background:var(--c-guardian);}
+
+  .brand{
+    font-family:'Kanit',sans-serif;
+    font-weight:500;
+    font-size:13px;
+    letter-spacing:.02em;
+    color:var(--ink-soft);
+    margin:0 0 6px;
+  }
+  h1{
+    font-family:'Kanit',sans-serif;
+    font-weight:700;
+    font-size:clamp(26px,5vw,34px);
+    line-height:1.25;
+    margin:0 0 10px;
+  }
+  .sub{
+    color:var(--ink-soft);
+    font-size:16px;
+    max-width:52ch;
+    margin:0 0 28px;
+  }
+
+  .btn{
+    font-family:'Sarabun',sans-serif;
+    font-weight:600;
+    font-size:16px;
+    border:none;
+    cursor:pointer;
+    border-radius:10px;
+    padding:14px 26px;
+    background:var(--ink);
+    color:#fff;
+    transition:transform .12s ease, opacity .12s ease;
+  }
+  .btn:hover{opacity:.88;}
+  .btn:active{transform:scale(.98);}
+  .btn.ghost{
+    background:transparent;
+    color:var(--ink);
+    border:1.5px solid var(--line);
+  }
+  .btn.ghost:hover{border-color:var(--ink); opacity:1;}
+
+  .progress{display:flex; gap:6px; margin-bottom:26px;}
+  .dot{height:6px; flex:1; border-radius:4px; background:var(--line); transition:background .25s ease;}
+  .dot.done{background:var(--ink);}
+  .dot.current{background:var(--blue);}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:30px 28px;
+    animation:rise .32s ease;
+  }
+  @keyframes rise{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  .qnum{
+    font-family:'Kanit',sans-serif;
+    font-weight:600;
+    color:var(--blue);
+    font-size:13px;
+    letter-spacing:.03em;
+    margin-bottom:10px;
+  }
+  .scenario{font-size:19px; font-weight:500; margin:0 0 22px;}
+  .options{display:flex; flex-direction:column; gap:10px;}
+  .opt{
+    text-align:left;
+    background:var(--paper);
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:14px 16px;
+    font-family:'Sarabun',sans-serif;
+    font-size:15px;
+    color:var(--ink);
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease, transform .1s ease;
+  }
+  .opt:hover{border-color:var(--blue); background:#fff;}
+  .opt:active{transform:scale(.985);}
+  .opt.picked{background:var(--ink); color:#fff; border-color:var(--ink);}
+  .opt:disabled{cursor:default; opacity:.5;}
+  .opt.picked:disabled{opacity:1;}
+
+  .intro-art{display:flex; gap:8px; margin:6px 0 24px; flex-wrap:wrap;}
+  .chip{
+    font-family:'Kanit',sans-serif;
+    font-size:12.5px;
+    font-weight:500;
+    color:#fff;
+    padding:6px 12px;
+    border-radius:999px;
+  }
+
+  .result-head{text-align:center; margin-bottom:6px;}
+  .result-title-eyebrow{font-family:'Kanit',sans-serif; font-size:13px; color:var(--ink-soft); margin:0 0 3px;}
+  .result-title{font-family:'Kanit',sans-serif; font-size:26px; font-weight:700; margin:0;}
+  .result-track{font-family:'Kanit',sans-serif; font-size:14px; font-weight:600; margin:4px 0 0;}
+  .character-wrap{display:flex; justify-content:center; margin:6px 0 14px;}
+  .character-wrap svg{width:190px; height:auto;}
+  .result-body p{font-size:16px; margin:0 0 16px;}
+  .project-box{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-left:3px solid var(--blue);
+    border-radius:8px;
+    padding:12px 14px;
+    margin:2px 0 4px;
+  }
+  .project-label{
+    font-family:'Kanit',sans-serif;
+    font-size:12px;
+    font-weight:600;
+    color:var(--blue);
+    margin:0 0 4px;
+  }
+  .project-text{font-size:14.5px; margin:0; color:var(--ink-soft);}
+  .section-label{font-family:'Kanit',sans-serif; font-size:13px; font-weight:600; color:var(--ink-soft); margin:26px 0 6px;}
+
+  .radar-wrap{display:flex; justify-content:center; margin:6px 0 4px;}
+  .radar-wrap svg{width:100%; max-width:360px; height:auto;}
+  .radar-label{font-family:'Sarabun',sans-serif; font-weight:600;}
+  .radar-pct{font-family:'Kanit',sans-serif; font-weight:600;}
+
+  .legend{display:flex; flex-direction:column; gap:8px; margin-top:18px;}
+  .legend-row{display:flex; align-items:center; gap:10px; font-size:14px;}
+  .legend-dot{width:10px; height:10px; border-radius:50%; flex-shrink:0;}
+  .legend-name{flex:1;}
+  .legend-pct{font-family:'Kanit',sans-serif; font-weight:600; color:var(--ink-soft);}
+
+  .actions{display:flex; gap:12px; margin-top:28px; flex-wrap:wrap;}
+  .copied-note{font-size:13px; color:var(--ink-soft); margin-top:8px; height:16px;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="flag"><span></span><span></span><span></span><span></span><span></span></div>
+  <div id="app"></div>
+</div>
+
+<script>
+const TRACKS = {
+  planning:{
+    name:"สายวางแผน",
+    persona:"นักวางแผน",
+    color:"var(--c-planning)",
+    mission:"คุณมองภาพรวมระยะยาว ชั่งน้ำหนักความเสี่ยงกับผลตอบแทนก่อนตัดสินใจทุกครั้ง และหาวิธีบริหารทรัพยากรให้ธุรกิจโตได้แบบมีฐานมั่นคง",
+    help:"คุณคือคนที่ทำให้ “โตไว” กับ “โตอย่างยั่งยืน” ไปด้วยกันได้ ไม่ใช่โตแบบเสี่ยงเกินตัว",
+    project:"Internal Carbon Price และ Sustainability-Linked Financing Framework — เครื่องมือที่ ปตท. ใช้ประเมินความคุ้มค่าและความเสี่ยงก่อนตัดสินใจลงทุนทุกครั้ง",
+    art:`<svg viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="120" cy="165" r="150" fill="#F4F6F8"/>
+      <polygon points="95,300 118,300 112,315 90,315" fill="#2f333c"/>
+      <polygon points="122,300 145,300 150,315 128,315" fill="#2f333c"/>
+      <polygon points="80,150 160,150 200,300 40,300" fill="#4c5aa0"/>
+      <polygon points="120,150 160,150 200,300 120,300" fill="#3e4c8a"/>
+      <polygon points="95,150 145,150 130,178 110,178" fill="#242c56"/>
+      <polygon points="80,155 58,162 48,232 70,236 87,175" fill="#4c5aa0"/>
+      <circle cx="57" cy="235" r="12" fill="#eec9a0"/>
+      <polygon points="160,155 187,140 207,103 189,93 165,150" fill="#3e4c8a"/>
+      <circle cx="198" cy="97" r="12" fill="#eec9a0"/>
+      <rect x="108" y="116" width="24" height="22" fill="#eec9a0"/>
+      <circle cx="120" cy="95" r="36" fill="#f2cfa0"/>
+      <polygon points="90,95 120,78 120,112" fill="#e6bc8b" opacity="0.55"/>
+      <path d="M84,92 Q88,40 120,42 Q152,40 156,92 Q140,68 120,66 Q100,68 84,92 Z" fill="#e6e8ec"/>
+      <path d="M84,92 Q96,55 120,55 Q108,76 88,92 Z" fill="#c9ccd2"/>
+      <rect x="102" y="87" width="13" height="3" rx="1.5" fill="#8a8f99"/>
+      <rect x="125" y="87" width="13" height="3" rx="1.5" fill="#8a8f99"/>
+      <circle cx="109" cy="95" r="2.6" fill="#2a2e36"/>
+      <circle cx="131" cy="95" r="2.6" fill="#2a2e36"/>
+      <path d="M92,104 Q120,99 148,104 L138,166 Q120,182 102,166 Z" fill="#eceef1"/>
+      <path d="M108,109 L120,176 L132,109 Z" fill="#d3d6db" opacity="0.7"/>
+      <g transform="translate(178,55) rotate(-15)">
+        <circle cx="20" cy="25" r="20" fill="#dfe2e6" stroke="#20264a" stroke-width="2"/>
+        <circle cx="20" cy="25" r="14" fill="#3e4c8a"/>
+        <polygon points="20,13 25,25 20,37 15,25" fill="#ffffff"/>
+        <polygon points="20,13 25,25 20,25" fill="#b9bedb"/>
+      </g>
+    </svg>`
+  },
+  action:{
+    name:"สายลงมือทำ",
+    persona:"นักลงมือทำ",
+    color:"var(--c-action)",
+    mission:"คุณพาไอเดียความยั่งยืนลงมาอยู่หน้างานจริง ลดการใช้พลังงานและของเสีย พร้อมเลือกของ-เลือกคู่ค้าอย่างมีความรับผิดชอบ",
+    help:"คุณคือมือที่ทำให้ความยั่งยืนไม่ใช่แค่คำพูด แต่เกิดขึ้นจริงตั้งแต่ต้นน้ำถึงปลายน้ำ",
+    project:"โครงการ Opti-Fuel ที่เพิ่มประสิทธิภาพการใช้เชื้อเพลิงด้วยความร้อนเหลือทิ้ง (WHRU) และ Green Procurement ที่ลดคาร์บอนจริงในกระบวนการผลิต",
+    art:`<svg viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="120" cy="165" r="150" fill="#F4F6F8"/>
+      <polygon points="95,300 118,300 112,315 90,315" fill="#2f333c"/>
+      <polygon points="122,300 145,300 150,315 128,315" fill="#2f333c"/>
+      <polygon points="80,150 160,150 200,300 40,300" fill="#f08640"/>
+      <polygon points="120,150 160,150 200,300 120,300" fill="#e8702a"/>
+      <polygon points="95,150 145,150 130,178 110,178" fill="#9a4a17"/>
+      <polygon points="80,155 58,162 48,232 70,236 87,175" fill="#f08640"/>
+      <circle cx="57" cy="235" r="12" fill="#eec9a0"/>
+      <polygon points="160,155 187,140 207,103 189,93 165,150" fill="#e8702a"/>
+      <circle cx="198" cy="97" r="12" fill="#eec9a0"/>
+      <rect x="108" y="116" width="24" height="22" fill="#eec9a0"/>
+      <circle cx="120" cy="95" r="36" fill="#f2cfa0"/>
+      <polygon points="90,95 120,78 120,112" fill="#e6bc8b" opacity="0.55"/>
+      <path d="M84,92 Q88,40 120,42 Q152,40 156,92 Q140,68 120,66 Q100,68 84,92 Z" fill="#e6e8ec"/>
+      <path d="M84,92 Q96,55 120,55 Q108,76 88,92 Z" fill="#c9ccd2"/>
+      <rect x="102" y="87" width="13" height="3" rx="1.5" fill="#8a8f99"/>
+      <rect x="125" y="87" width="13" height="3" rx="1.5" fill="#8a8f99"/>
+      <circle cx="109" cy="95" r="2.6" fill="#2a2e36"/>
+      <circle cx="131" cy="95" r="2.6" fill="#2a2e36"/>
+      <path d="M92,104 Q120,99 148,104 L138,166 Q120,182 102,166 Z" fill="#eceef1"/>
+      <path d="M108,109 L120,176 L132,109 Z" fill="#d3d6db" opacity="0.7"/>
+      <g transform="translate(174,48) rotate(-15)">
+        <rect x="13" y="6" width="11" height="42" rx="5.5" fill="#dfe2e6" stroke="#7a4419" stroke-width="2"/>
+        <circle cx="18.5" cy="9" r="10" fill="none" stroke="#dfe2e6" stroke-width="7"/>
+        <circle cx="18.5" cy="9" r="10" fill="none" stroke="#7a4419" stroke-width="2"/>
+        <rect x="9" y="40" width="19" height="11" rx="2.5" fill="#dfe2e6" stroke="#7a4419" stroke-width="2"/>
+      </g>
+    </svg>`
+  },
+  people:{
+    name:"สายดูแลคน",
+    persona:"นักพัฒนาคน",
+    color:"var(--c-people)",
+    mission:"คุณห่วงใยคนรอบตัว เติมความรู้ ทักษะ และดูแลความเป็นอยู่ของทุกคน เพราะองค์กรจะไปได้ไกลก็ต่อเมื่อคนเติบโตไปด้วยกัน",
+    help:"คุณคือคนที่ทำให้ทุกคนในทีมรู้สึกว่าตัวเองสำคัญและอยากเติบโตต่อ",
+    project:"SM Academy (Sustainability Culture 101 / Strategy 102) และ Good Growth Challenge ที่พัฒนาความรู้และทักษะให้พนักงานทุกคน",
+    art:`<svg viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="120" cy="165" r="150" fill="#F4F6F8"/>
+      <polygon points="95,300 118,300 112,315 90,315" fill="#2f333c"/>
+      <polygon points="122,300 145,300 150,315 128,315" fill="#2f333c"/>
+      <polygon points="80,150 160,150 200,300 40,300" fill="#ee7684"/>
+      <polygon points="120,150 160,150 200,300 120,300" fill="#e85c6b"/>
+      <polygon points="95,150 145,150 130,178 110,178" fill="#9c2f3d"/>
+      <polygon points="80,155 58,162 48,232 70,236 87,175" fill="#ee7684"/>
+      <circle cx="57" cy="235" r="12" fill="#eec9a0"/>
+      <polygon points="160,155 187,140 207,103 189,93 165,150" fill="#e85c6b"/>
+      <circle cx="198" cy="97" r="12" fill="#eec9a0"/>
+      <rect x="108" y="116" width="24" height="22" fill="#eec9a0"/>
+      <circle cx="120" cy="95" r="36" fill="#f2cfa0"/>
+      <polygon points="90,95 120,78 120,112" fill="#e6bc8b" opacity="0.55"/>
+      <path d="M84,92 Q88,40 120,42 Q152,40 156,92 Q140,68 120,66 Q100,68 84,92 Z" fill="#e6e8ec"/>
+      <path d="M84,92 Q96,55 120,55 Q108,76 88,92 Z" fill="#c9ccd2"/>
+      <rect x="102" y="87" width="13" height="3" rx="1.5" fill="#8a8f99"/>
+      <rect x="125" y="87" width="13" height="3" rx="1.5" fill="#8a8f99"/>
+      <circle cx="109" cy="95" r="2.6" fill="#2a2e36"/>
+      <circle cx="131" cy="95" r="2.6" fill="#2a2e36"/>
+      <path d="M92,104 Q120,99 148,104 L138,166 Q120,182 102,166 Z" fill="#eceef1"/>
+      <path d="M108,109 L120,176 L132,109 Z" fill="#d3d6db" opacity="0.7"/>
+      <g transform="translate(176,56) rotate(-8)">
+        <path d="M20 44 C0 28 0 9 14 5 C19 3.5 20 11 20 13 C20 11 21 3.5 26 5 C40 9 40 28 20 44 Z" fill="#e85c6b" stroke="#8a2b3b" stroke-width="2"/>
+      </g>
+    </svg>`
+  },
+  story:{
+    name:"สายเล่าเรื่อง",
+    persona:"นักเล่าเรื่อง",
+    color:"var(--c-story)",
+    mission:"คุณสื่อสารเรื่องดี ๆ ให้คนเข้าใจและเชื่อใจ ทำให้ความพยายามด้านความยั่งยืนถูกมองเห็นและอยากมีส่วนร่วม",
+    help:"คุณคือเสียงที่ทำให้เรื่องยาก ๆ กลายเป็นเรื่องที่ทุกคนอินไปด้วยกัน",
+    project:"แคมเปญ Good Growth (โตได้ โตดี) และงาน SPIRIT DAY ที่สื่อสารเรื่องความยั่งยืนให้คนทั้งองค์กรเข้าใจและอยากมีส่วนร่วม",
+    art:`<svg viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="120" cy="165" r="150" fill="#F4F6F8"/>
+      <polygon points="95,300 118,300 112,315 90,315" fill="#2f333c"/>
+      <polygon points="122,300 145,300 150,315 128,315" fill="#2f333c"/>
+      <polygon points="80,150 160,150 200,300 40,300" fill="#eab654"/>
+      <polygon points="120,150 160,150 200,300 120,300" fill="#e0a233"/>
+      <polygon points="95,150 145,150 130,178 110,178" fill="#8f6316"/>
+      <polygon points="80,155 58,162 48,232 70,236 87,175" fill="#eab654"/>
+      <circle cx="57" cy="235" r="12" fill="#eec9a0"/>
+      <polygon points="160,155 187,140 207,103 189,93 165,150" fill="#e0a233"/>
+      <circle cx="198" cy="97" r="12" fill="#eec9a0"/>
+      <rect x="108" y="116" width="24" height="22" fill="#eec9a0"/>
+      <circle cx="120" cy="95" r="36" fill="#f2cfa0"/>
+      <polygon points="90,95 120,78 120,112" fill="#e6bc8b" opacity="0.55"/>
+      <path d="M84,92 Q88,40 120,42 Q152,40 156,92 Q140,68 120,66 Q100,68 84,92 Z" fill="#e6e8ec"/>
+      <path d="M84,92 Q96,55 120,55 Q108,76 88,92 Z" fill="#c9ccd2"/>
+      <rect x="102" y="87" width="13" height="3" rx="1.5" fill="#8a8f99"/>
+      <rect x="125" y="87" width="13" height="3" rx="1.5" fill="#8a8f99"/>
+      <circle cx="109" cy="95" r="2.6" fill="#2a2e36"/>
+      <circle cx="131" cy="95" r="2.6" fill="#2a2e36"/>
+      <path d="M92,104 Q120,99 148,104 L138,166 Q120,182 102,166 Z" fill="#eceef1"/>
+      <path d="M108,109 L120,176 L132,109 Z" fill="#d3d6db" opacity="0.7"/>
+      <g transform="translate(174,52) rotate(-12)">
+        <path d="M6 30 L6 20 L30 4 L30 46 L6 30 Z" fill="#e0a233" stroke="#8a5c14" stroke-width="2"/>
+        <rect x="-1" y="23" width="8" height="14" rx="2.5" fill="#c9861f"/>
+        <path d="M35 12 Q44 25 35 38" fill="none" stroke="#e0a233" stroke-width="3.5" stroke-linecap="round"/>
+      </g>
+    </svg>`
+  },
+  guardian:{
+    name:"สายปกป้อง",
+    persona:"ผู้พิทักษ์",
+    color:"var(--c-guardian)",
+    mission:"คุณเป็นรั้วที่ทำให้ทุกอย่างถูกต้อง โปร่งใส และปลอดภัย ตั้งแต่สัญญา กฎระเบียบ ไปจนถึงความปลอดภัยหน้างาน",
+    help:"คุณคือคนที่ทำให้การเติบโตขององค์กรมีรากฐานที่มั่นคง และทำให้ทุกคนกลับบ้านอย่างปลอดภัย",
+    project:"งานด้าน GRC (Governance, Risk, Compliance) และ QSSHE ที่กำกับดูแลให้ทุกกิจกรรมของ ปตท. ถูกต้อง โปร่งใส และปลอดภัย",
+    art:`<svg viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="120" cy="165" r="150" fill="#F4F6F8"/>
+      <polygon points="95,300 118,300 112,315 90,315" fill="#2f333c"/>
+      <polygon points="122,300 145,300 150,315 128,315" fill="#2f333c"/>
+      <polygon points="80,150 160,150 200,300 40,300" fill="#3a8f7d"/>
+      <polygon points="120,150 160,150 200,300 120,300" fill="#2f7566"/>
+      <polygon points="95,150 145,150 130,178 110,178" fill="#1f574d"/>
+      <polygon points="80,155 58,162 48,232 70,236 87,175" fill="#3a8f7d"/>
+      <circle cx="57" cy="235" r="12" fill="#eec9a0"/>
+      <polygon points="160,155 187,140 207,103 189,93 165,150" fill="#2f7566"/>
+      <circle cx="198" cy="97" r="12" fill="#eec9a0"/>
+      <rect x="108" y="116" width="24" height="22" fill="#eec9a0"/>
+      <circle cx="120" cy="95" r="36" fill="#f2cfa0"/>
+      <polygon points="90,95 120,78 120,112" fill="#e6bc8b" opacity="0.55"/>
+      <path d="M84,92 Q88,40 120,42 Q152,40 156,92 Q140,68 120,66 Q100,68 84,92 Z" fill="#e6e8ec"/>
+      <path d="M84,92 Q96,55 120,55 Q108,76 88,92 Z" fill="#c9ccd2"/>
+      <rect x="102" y="87" width="13" height="3" rx="1.5" fill="#8a8f99"/>
+      <rect x="125" y="87" width="13" height="3" rx="1.5" fill="#8a8f99"/>
+      <circle cx="109" cy="95" r="2.6" fill="#2a2e36"/>
+      <circle cx="131" cy="95" r="2.6" fill="#2a2e36"/>
+      <path d="M92,104 Q120,99 148,104 L138,166 Q120,182 102,166 Z" fill="#eceef1"/>
+      <path d="M108,109 L120,176 L132,109 Z" fill="#d3d6db" opacity="0.7"/>
+      <g transform="translate(178,55) rotate(-15)">
+        <path d="M20 0 L38 8 L38 26 C38 40 28 48 20 52 C12 48 2 40 2 26 L2 8 Z" fill="#dfe2e6" stroke="#1f574d" stroke-width="2"/>
+        <path d="M20 6 L34 12 L34 26 C34 37 26 44 20 47 Z" fill="#2f7566"/>
+        <path d="M12 26 L18 33 L30 18" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </svg>`
+  }
+};
+
+const TRACK_ORDER = ["planning","action","people","story","guardian"];
+
+const QUESTIONS = [
+  {
+    scenario:"เจอปัญหาใหญ่ในทีม คุณมักจะ...",
+    options:[
+      {t:"คิดแผนระยะยาวก่อนว่าทำแบบไหนคุ้มค่าที่สุด", k:"planning"},
+      {t:"ลงมือแก้ปัญหาหน้างานทันที", k:"action"},
+      {t:"ถามความเห็นเพื่อนร่วมทีมก่อนตัดสินใจ", k:"people"},
+      {t:"อธิบายสถานการณ์ให้ทุกคนเข้าใจตรงกันก่อน", k:"story"},
+      {t:"เช็คก่อนว่าทำแบบนี้ถูกต้องและปลอดภัยไหม", k:"guardian"}
+    ]
+  },
+  {
+    scenario:"เพื่อนถามว่า “ทำไมต้องสนใจเรื่องความยั่งยืนด้วย” คุณตอบว่า...",
+    options:[
+      {t:"เพราะมันคือการลงทุนที่คุ้มค่าในระยะยาว", k:"planning"},
+      {t:"เพราะทุกคนลงมือทำได้จริงตั้งแต่วันนี้", k:"action"},
+      {t:"เพราะทุกคนควรมีคุณภาพชีวิตที่ดีขึ้นด้วยกัน", k:"people"},
+      {t:"เพราะมันคือเรื่องที่ต้องเล่าให้คนเข้าใจและเชื่อใจกัน", k:"story"},
+      {t:"เพราะต้องทำให้ถูกต้อง โปร่งใส และปลอดภัย", k:"guardian"}
+    ]
+  },
+  {
+    scenario:"ก่อนซื้อของหรือร่วมงานกับใคร คุณจะ...",
+    options:[
+      {t:"ดูว่าในระยะยาวจะคุ้มไหม", k:"planning"},
+      {t:"ลงมือทดลองใช้ดูก่อนตัดสินใจ", k:"action"},
+      {t:"ถามคนรอบตัวว่าเคยใช้แล้วเป็นยังไงบ้าง", k:"people"},
+      {t:"หารีวิวหรือเรื่องราวเบื้องหลังของแบรนด์นั้นก่อน", k:"story"},
+      {t:"อ่านเงื่อนไข/ข้อตกลงให้ละเอียดก่อนเสมอ", k:"guardian"}
+    ]
+  },
+  {
+    scenario:"เห็นเพื่อนกำลังทำอะไรเสี่ยงอันตรายนิดหน่อย คุณจะ...",
+    options:[
+      {t:"คิดก่อนว่าผลที่ตามมาจะเป็นยังไง", k:"planning"},
+      {t:"รีบเข้าไปช่วยหยุดทันที", k:"action"},
+      {t:"ถามด้วยความห่วงใยว่าเขาโอเคไหม", k:"people"},
+      {t:"บอกทุกคนให้รู้ทั่วกันอย่างตรงไปตรงมา", k:"story"},
+      {t:"เตือนและจดไว้ให้ถูกต้องตามขั้นตอน", k:"guardian"}
+    ]
+  },
+  {
+    scenario:"ถ้ามีเงินก้อนหนึ่งอยากใช้เพื่อโลกที่ดีขึ้น คุณจะ...",
+    options:[
+      {t:"วางแผนให้เงินก้อนนี้เกิดผลลัพธ์คุ้มค่าที่สุด", k:"planning"},
+      {t:"เอาไปปรับปรุงของที่ใช้อยู่ให้ประหยัดขึ้นทันที", k:"action"},
+      {t:"แบ่งปันให้คนที่ต้องการความช่วยเหลือ", k:"people"},
+      {t:"ทำโปรเจกต์เล่าเรื่องดี ๆ ให้คนอื่นอยากทำตาม", k:"story"},
+      {t:"เลือกลงทุนกับที่ที่ตรวจสอบได้ว่าโปร่งใสและปลอดภัย", k:"guardian"}
+    ]
+  },
+  {
+    scenario:"ในกลุ่มเพื่อน คุณมักได้รับบทบาทเป็นคนที่...",
+    options:[
+      {t:"คอยวางแผนทริปหรือกิจกรรมล่วงหน้า", k:"planning"},
+      {t:"คอยลงมือจัดการเรื่องต่าง ๆ ให้เสร็จ", k:"action"},
+      {t:"คอยซัพพอร์ตและดูแลความเป็นอยู่ของทุกคน", k:"people"},
+      {t:"เล่าเรื่องให้ทุกคนสนุกและเข้าใจตรงกัน", k:"story"},
+      {t:"คอยเตือนให้ทุกอย่างถูกต้องและปลอดภัย", k:"guardian"}
+    ]
+  },
+  {
+    scenario:"วันหยุดที่ไม่มีอะไรทำ คุณมักจะ...",
+    options:[
+      {t:"วางแผนอนาคตของตัวเองหรือทริปครั้งหน้า", k:"planning"},
+      {t:"ลงมือทำอะไรสักอย่างด้วยมือตัวเอง", k:"action"},
+      {t:"ชวนคนใกล้ตัวมาทำกิจกรรมดี ๆ ร่วมกัน", k:"people"},
+      {t:"เขียน/ถ่ายรูป/เล่าเรื่องราวของวันนั้นให้คนอื่นฟัง", k:"story"},
+      {t:"จัดของ เช็คความเรียบร้อยของบ้านให้ปลอดภัย", k:"guardian"}
+    ]
+  },
+  {
+    scenario:"ถ้าต้องเลือกงานในฝันสักวัน คุณอยากทำอะไรมากที่สุด?",
+    options:[
+      {t:"นั่งดูตัวเลข วางแผนกลยุทธ์", k:"planning"},
+      {t:"ลงพื้นที่ลุยงานจริงด้วยตัวเอง", k:"action"},
+      {t:"ดูแลและพัฒนาคนในทีม", k:"people"},
+      {t:"เล่าเรื่องราวดี ๆ ให้คนอื่นฟัง", k:"story"},
+      {t:"ตรวจสอบให้ทุกอย่างถูกต้องและปลอดภัย", k:"guardian"}
+    ]
+  }
+];
+
+const MAX_PER_TRACK = {};
+TRACK_ORDER.forEach(k=>MAX_PER_TRACK[k]=0);
+QUESTIONS.forEach(q=>q.options.forEach(o=>MAX_PER_TRACK[o.k]++));
+
+let step = -1;
+let scores = {};
+TRACK_ORDER.forEach(k=>scores[k]=0);
+let answered = false;
+
+const app = document.getElementById('app');
+
+function renderIntro(){
+  const chips = TRACK_ORDER.map(k=>{
+    const v = TRACKS[k];
+    return `<span class="chip" style="background:${v.color}">${v.name}</span>`;
+  }).join('');
+  app.innerHTML = `
+    <p class="brand">GOOD GROWTH · โตได้ โตดี</p>
+    <h1>คุณเป็นคนยั่งยืนสายไหน?</h1>
+    <p class="sub">8 คำถามง่าย ๆ เล่นสนุก ๆ ตอบตามสัญชาตญาณ แล้วมาดู “แผนที่พลัง” ของคุณว่าแต่ละด้านแข็งแรงแค่ไหน — เหมือนสเตตัสตัวละครในเกม</p>
+    <div class="intro-art">${chips}</div>
+    <button class="btn" id="startBtn">เริ่มทำแบบทดสอบ</button>
+  `;
+  document.getElementById('startBtn').addEventListener('click', startQuiz);
+}
+
+function startQuiz(){
+  step = 0;
+  TRACK_ORDER.forEach(k=>scores[k]=0);
+  renderQuestion();
+}
+
+function renderProgress(){
+  return `<div class="progress">${QUESTIONS.map((_,i)=>{
+    let cls='dot';
+    if(i<step) cls+=' done';
+    if(i===step) cls+=' current';
+    return `<div class="${cls}"></div>`;
+  }).join('')}</div>`;
+}
+
+function renderQuestion(){
+  answered = false;
+  const q = QUESTIONS[step];
+  app.innerHTML = `
+    ${renderProgress()}
+    <div class="card">
+      <p class="qnum">ข้อ ${step+1} / ${QUESTIONS.length}</p>
+      <p class="scenario">${q.scenario}</p>
+      <div class="options">
+        ${q.options.map((o,i)=>`<button class="opt" data-i="${i}">${o.t}</button>`).join('')}
+      </div>
+    </div>
+  `;
+  document.querySelectorAll('.opt').forEach(btn=>{
+    btn.addEventListener('click', ()=> pick(Number(btn.dataset.i)));
+  });
+}
+
+function pick(i){
+  if(answered) return;
+  answered = true;
+  const q = QUESTIONS[step];
+  scores[q.options[i].k]++;
+  document.querySelectorAll('.opt').forEach((el,idx)=>{
+    el.disabled = true;
+    if(idx===i) el.classList.add('picked');
+  });
+  setTimeout(()=>{
+    step++;
+    if(step<QUESTIONS.length){ renderQuestion(); }
+    else { renderResult(); }
+  }, 380);
+}
+
+// ---------- radar / strength web map ----------
+function polar(cx,cy,r,angleDeg){
+  const rad = (Math.PI/180)*(angleDeg-90);
+  return [cx + r*Math.cos(rad), cy + r*Math.sin(rad)];
+}
+
+function buildRadarSVG(data){
+  // data: array in TRACK_ORDER order of {key,label,pct,color}
+  const n = data.length;
+  const cx=160, cy=160, maxR=100;
+  const step = 360/n;
+  const levels = [0.25,0.5,0.75,1];
+
+  const gridPolys = levels.map(l=>{
+    const pts = data.map((d,i)=> polar(cx,cy,maxR*l, i*step).join(',')).join(' ');
+    return `<polygon points="${pts}" fill="none" stroke="#e6e2d8" stroke-width="1"/>`;
+  }).join('');
+
+  const spokes = data.map((d,i)=>{
+    const [x,y] = polar(cx,cy,maxR, i*step);
+    return `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#e6e2d8" stroke-width="1"/>`;
+  }).join('');
+
+  const dataPts = data.map((d,i)=> polar(cx,cy, maxR*(d.pct/100), i*step).join(',')).join(' ');
+
+  const dots = data.map((d,i)=>{
+    const [x,y] = polar(cx,cy, maxR*(d.pct/100), i*step);
+    return `<circle cx="${x}" cy="${y}" r="4.5" fill="${d.color}" stroke="#fff" stroke-width="1.5"/>`;
+  }).join('');
+
+  const labels = data.map((d,i)=>{
+    const [lx,ly] = polar(cx,cy, maxR+34, i*step);
+    let anchor='middle';
+    if(lx < cx-8) anchor='end';
+    else if(lx > cx+8) anchor='start';
+    return `
+      <text x="${lx}" y="${ly-3}" text-anchor="${anchor}" class="radar-label" font-size="12.5" fill="var(--ink)">${d.label}</text>
+      <text x="${lx}" y="${ly+13}" text-anchor="${anchor}" class="radar-pct" font-size="13" fill="${d.color}">${d.pct}%</text>
+    `;
+  }).join('');
+
+  return `
+    <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+      ${gridPolys}
+      ${spokes}
+      <polygon points="${dataPts}" fill="var(--blue)" fill-opacity="0.22" stroke="var(--blue)" stroke-width="2"/>
+      ${dots}
+      ${labels}
+    </svg>
+  `;
+}
+
+function renderResult(){
+  const data = TRACK_ORDER.map(k=>{
+    const pct = MAX_PER_TRACK[k] ? Math.round(scores[k]/MAX_PER_TRACK[k]*100) : 0;
+    return {key:k, label:TRACKS[k].name.replace('สาย',''), pct, color:TRACKS[k].color};
+  });
+  const ranked = [...data].sort((a,b)=> b.pct - a.pct);
+  const top = TRACKS[ranked[0].key];
+  const topColor = top.color;
+
+  const legend = [...data].sort((a,b)=> b.pct - a.pct).map(d=>`
+    <div class="legend-row">
+      <span class="legend-dot" style="background:${d.color}"></span>
+      <span class="legend-name">${TRACKS[d.key].name}</span>
+      <span class="legend-pct">${d.pct}%</span>
+    </div>
+  `).join('');
+
+  app.innerHTML = `
+    <div class="card">
+      <p class="result-title-eyebrow">ผลการทดสอบของคุณ</p>
+      <div class="result-head">
+        <p class="result-title-eyebrow">บุคลิกความยั่งยืนในแบบของคุณคือ</p>
+        <h2 class="result-title">${top.persona}</h2>
+        <p class="result-track" style="color:${topColor}">${top.name}</p>
+      </div>
+      <div class="character-wrap">${top.art}</div>
+      <div class="result-body">
+        <p>${top.mission}</p>
+        <p style="font-weight:600;">${top.help}</p>
+        <div class="project-box">
+          <p class="project-label">เกี่ยวข้องกับโปรเจกต์จริงของ ปตท.</p>
+          <p class="project-text">${top.project}</p>
+        </div>
+      </div>
+
+      <p class="section-label">แผนที่พลังความยั่งยืนของคุณ</p>
+      <div class="radar-wrap">${buildRadarSVG(data)}</div>
+      <div class="legend">${legend}</div>
+
+      <div class="actions">
+        <button class="btn" id="restartBtn">ทำอีกครั้ง</button>
+        <button class="btn ghost" id="copyBtn">คัดลอกผลลัพธ์</button>
+      </div>
+      <p class="copied-note" id="copyNote"></p>
+    </div>
+  `;
+  document.getElementById('restartBtn').addEventListener('click', restart);
+  document.getElementById('copyBtn').addEventListener('click', ()=> copyResult(data, top));
+}
+
+function copyResult(data, top){
+  const statLine = data.map(d=> `${TRACKS[d.key].name} ${d.pct}%`).join(' · ');
+  const text = `ผลทดสอบ: ฉันเป็นคนยั่งยืนสาย “${top.persona}” (${top.name}) 🌱\n${statLine}\nเกี่ยวข้องกับ: ${top.project}`;
+  const note = document.getElementById('copyNote');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text)
+      .then(()=>{ note.textContent = 'คัดลอกแล้ว ✓'; })
+      .catch(()=>{ note.textContent = text; });
+  } else {
+    note.textContent = text;
+  }
+}
+
+function restart(){
+  step = -1;
+  renderIntro();
+}
+
+renderIntro();
+</script>
+</body>
+</html>
