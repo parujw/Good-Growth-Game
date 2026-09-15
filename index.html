@@ -182,7 +182,9 @@
   .result-track{font-family:'Kanit',sans-serif; font-size:14px; font-weight:600; margin:4px 0 0;}
   .character-wrap{display:flex; justify-content:center; margin:6px 0 14px;}
   .character-wrap svg{width:190px; height:auto;}
-  .result-body p{font-size:16px; margin:0 0 16px;}
+  .result-body p{font-size:16px; margin:0 0 14px;}
+  .result-lead{font-weight:600;}
+  .result-detail{color:var(--ink-soft); font-size:15px;}
   .work-box{
     background:var(--paper);
     border:1px solid var(--line);
@@ -365,6 +367,7 @@ const TRACKS = {
     tint:"#eceef7",
     glasses:"rect",
     hair:"part",
+    mission:"คุณมองภาพรวมระยะยาว ชั่งน้ำหนักความเสี่ยงกับผลตอบแทนก่อนตัดสินใจทุกครั้ง และหาวิธีบริหารทรัพยากรให้ธุรกิจโตได้แบบมีฐานมั่นคง",
     help:"คุณคือคนที่ทำให้ “โตไว” กับ “โตอย่างยั่งยืน” ไปด้วยกันได้ ไม่ใช่โตแบบเสี่ยงเกินตัว",
     work:"วางแผนกลยุทธ์และการลงทุน โดยมองทั้ง <strong>โอกาส ความเสี่ยง ESG และผลกระทบระยะยาว</strong> ก่อนตัดสินใจ",
     prop:`<g transform="translate(178,55) rotate(-15)">
@@ -383,6 +386,7 @@ const TRACKS = {
     tint:"#fdefe6",
     glasses:"none",
     hair:"short",
+    mission:"คุณพาไอเดียความยั่งยืนลงมาอยู่หน้างานจริง ลดการใช้พลังงานและของเสีย พร้อมเลือกของ-เลือกคู่ค้าอย่างมีความรับผิดชอบ",
     help:"คุณคือมือที่ทำให้ความยั่งยืนไม่ใช่แค่คำพูด แต่เกิดขึ้นจริงตั้งแต่ต้นน้ำถึงปลายน้ำ",
     work:"ปรับปรุงกระบวนการทำงานให้ <strong>ใช้ทรัพยากรและพลังงานอย่างมีประสิทธิภาพ</strong> ลดของเสียและการปล่อย GHG",
     prop:`<g transform="translate(174,48) rotate(-15)">
@@ -401,6 +405,7 @@ const TRACKS = {
     tint:"#fdedef",
     glasses:"round",
     hair:"part",
+    mission:"คุณห่วงใยคนรอบตัว เติมความรู้ ทักษะ และดูแลความเป็นอยู่ของทุกคน เพราะองค์กรจะไปได้ไกลก็ต่อเมื่อคนเติบโตไปด้วยกัน",
     help:"คุณคือคนที่ทำให้ทุกคนในทีมรู้สึกว่าตัวเองสำคัญและอยากเติบโตต่อ",
     work:"พัฒนาความรู้และทักษะ ดูแล <strong>คุณภาพชีวิต ความปลอดภัย และความเป็นอยู่ที่ดี</strong> ของพนักงาน เพื่อให้คนพร้อมเติบโตไปกับองค์กร",
     prop:`<g transform="translate(176,56) rotate(-8)">
@@ -416,6 +421,7 @@ const TRACKS = {
     tint:"#fcf3e2",
     glasses:"none",
     hair:"part",
+    mission:"คุณสื่อสารเรื่องดี ๆ ให้คนเข้าใจและเชื่อใจ ทำให้ความพยายามด้านความยั่งยืนถูกมองเห็นและอยากมีส่วนร่วม",
     help:"คุณคือเสียงที่ทำให้เรื่องยาก ๆ กลายเป็นเรื่องที่ทุกคนอินไปด้วยกัน",
     work:"สื่อสารและเปิดเผยข้อมูลอย่างโปร่งใส ทำให้เรื่องความยั่งยืนเข้าใจง่าย และสร้างการมีส่วนร่วมกับผู้มีส่วนได้ส่วนเสีย",
     prop:`<g transform="translate(174,52) rotate(-12)">
@@ -433,6 +439,7 @@ const TRACKS = {
     tint:"#e8f2ef",
     glasses:"rect",
     hair:"short",
+    mission:"คุณเป็นรั้วที่ทำให้ทุกอย่างถูกต้อง โปร่งใส และปลอดภัย ตั้งแต่สัญญา กฎระเบียบ ไปจนถึงความปลอดภัยหน้างาน",
     help:"คุณคือคนที่ทำให้การเติบโตขององค์กรมีรากฐานที่มั่นคง และทำให้ทุกคนกลับบ้านอย่างปลอดภัย",
     work:"ดูแล <strong>กฎหมาย จริยธรรม ธรรมาภิบาล ความเสี่ยง และความปลอดภัย</strong> เพื่อให้องค์กรเติบโตอย่างรับผิดชอบและมั่นคง",
     prop:`<g transform="translate(178,55) rotate(-15)">
@@ -809,7 +816,8 @@ function renderResult(){
       </div>
       <div class="character-wrap">${buildCharacter(top)}</div>
       <div class="result-body">
-        <p style="font-weight:600;">${top.help}</p>
+        <p class="result-lead">${top.help}</p>
+        <p class="result-detail">${top.mission}</p>
         <div class="work-box" style="border-left-color:${topColor}">
           <p class="work-label" style="color:${topColor}">งานของคุณ ก็สร้าง Good Growth ได้ 🌱</p>
           <p class="work-text">${top.work}</p>
