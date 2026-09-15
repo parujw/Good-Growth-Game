@@ -157,6 +157,38 @@
     border-radius:999px;
   }
 
+  .pick-label{
+    font-family:'Kanit',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink-soft);
+    margin:0 0 8px;
+  }
+  .avatar-pick{display:flex; gap:12px; margin:0 0 26px;}
+  .avatar-btn{
+    background:var(--card);
+    border:2px solid var(--line);
+    border-radius:14px;
+    padding:8px 20px 10px;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:2px;
+    font-family:'Kanit',sans-serif;
+    font-size:13px;
+    font-weight:500;
+    color:var(--ink-soft);
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;
+    user-select:none;
+    transition:border-color .15s ease, color .15s ease, transform .1s ease;
+  }
+  .avatar-btn svg{width:58px; height:66px; display:block;}
+  .avatar-btn:active{transform:scale(.97);}
+  .avatar-btn.picked{border-color:var(--blue); color:var(--ink);}
+  @media (hover:hover){ .avatar-btn:hover{border-color:var(--blue);} }
+
   .result-cols{display:flex; flex-direction:column;}
   .result-head{text-align:center; margin-bottom:6px;}
   .result-title-eyebrow{font-family:'Kanit',sans-serif; font-size:13px; color:var(--ink-soft); margin:0 0 3px;}
@@ -248,6 +280,10 @@
     h1{font-size:clamp(38px,3.8vw,54px);}
     .sub{font-size:20px; max-width:58ch; margin-bottom:34px;}
     .chip{font-size:15px; padding:8px 16px;}
+    .pick-label{font-size:16px; margin-bottom:10px;}
+    .avatar-pick{gap:16px; margin-bottom:32px;}
+    .avatar-btn{font-size:16px; padding:12px 30px 14px; border-radius:18px;}
+    .avatar-btn svg{width:80px; height:92px;}
     .btn{font-size:20px; padding:20px 38px; border-radius:14px;}
 
     .card{padding:44px 48px; border-radius:22px;}
@@ -344,6 +380,7 @@ const TRACKS = {
     tint:"#eceef7",
     glasses:"rect",
     hair:"part",
+    hairF:"bob",
     mission:"คุณมองภาพรวมระยะยาว ชั่งน้ำหนักความเสี่ยงกับผลตอบแทนก่อนตัดสินใจทุกครั้ง และหาวิธีบริหารทรัพยากรให้ธุรกิจโตได้แบบมีฐานมั่นคง",
     help:"คุณคือคนที่ทำให้ “โตไว” กับ “โตอย่างยั่งยืน” ไปด้วยกันได้ ไม่ใช่โตแบบเสี่ยงเกินตัว",
     project:"Internal Carbon Price และ Sustainability-Linked Financing Framework — เครื่องมือที่ ปตท. ใช้ประเมินความคุ้มค่าและความเสี่ยงก่อนตัดสินใจลงทุนทุกครั้ง",
@@ -363,6 +400,7 @@ const TRACKS = {
     tint:"#fdefe6",
     glasses:"none",
     hair:"short",
+    hairF:"tie",
     mission:"คุณพาไอเดียความยั่งยืนลงมาอยู่หน้างานจริง ลดการใช้พลังงานและของเสีย พร้อมเลือกของ-เลือกคู่ค้าอย่างมีความรับผิดชอบ",
     help:"คุณคือมือที่ทำให้ความยั่งยืนไม่ใช่แค่คำพูด แต่เกิดขึ้นจริงตั้งแต่ต้นน้ำถึงปลายน้ำ",
     project:"โครงการ Opti-Fuel ที่เพิ่มประสิทธิภาพการใช้เชื้อเพลิงด้วยความร้อนเหลือทิ้ง (WHRU) และ Green Procurement ที่ลดคาร์บอนจริงในกระบวนการผลิต",
@@ -382,6 +420,7 @@ const TRACKS = {
     tint:"#fdedef",
     glasses:"round",
     hair:"part",
+    hairF:"bob",
     mission:"คุณห่วงใยคนรอบตัว เติมความรู้ ทักษะ และดูแลความเป็นอยู่ของทุกคน เพราะองค์กรจะไปได้ไกลก็ต่อเมื่อคนเติบโตไปด้วยกัน",
     help:"คุณคือคนที่ทำให้ทุกคนในทีมรู้สึกว่าตัวเองสำคัญและอยากเติบโตต่อ",
     project:"SM Academy (Sustainability Culture 101 / Strategy 102) และ Good Growth Challenge ที่พัฒนาความรู้และทักษะให้พนักงานทุกคน",
@@ -398,6 +437,7 @@ const TRACKS = {
     tint:"#fcf3e2",
     glasses:"none",
     hair:"part",
+    hairF:"tie",
     mission:"คุณสื่อสารเรื่องดี ๆ ให้คนเข้าใจและเชื่อใจ ทำให้ความพยายามด้านความยั่งยืนถูกมองเห็นและอยากมีส่วนร่วม",
     help:"คุณคือเสียงที่ทำให้เรื่องยาก ๆ กลายเป็นเรื่องที่ทุกคนอินไปด้วยกัน",
     project:"แคมเปญ Good Growth (โตได้ โตดี) และงาน SPIRIT DAY ที่สื่อสารเรื่องความยั่งยืนให้คนทั้งองค์กรเข้าใจและอยากมีส่วนร่วม",
@@ -416,6 +456,7 @@ const TRACKS = {
     tint:"#e8f2ef",
     glasses:"rect",
     hair:"short",
+    hairF:"bob",
     mission:"คุณเป็นรั้วที่ทำให้ทุกอย่างถูกต้อง โปร่งใส และปลอดภัย ตั้งแต่สัญญา กฎระเบียบ ไปจนถึงความปลอดภัยหน้างาน",
     help:"คุณคือคนที่ทำให้การเติบโตขององค์กรมีรากฐานที่มั่นคง และทำให้ทุกคนกลับบ้านอย่างปลอดภัย",
     project:"งานด้าน GRC (Governance, Risk, Compliance) และ QSSHE ที่กำกับดูแลให้ทุกกิจกรรมของ ปตท. ถูกต้อง โปร่งใส และปลอดภัย",
@@ -554,6 +595,15 @@ document.addEventListener('fullscreenchange', ()=>{
   document.addEventListener(ev, resetIdleTimer, {passive:true});
 });
 
+// The result is meant to be "this is you", so the player picks the figure
+// before starting. The preview crops buildHead to just the head.
+let avatar = "m";
+
+function avatarPreview(v){
+  const stub = {name:"", glasses:"none", hair:"part", hairF: v === "f" ? "bob" : "part"};
+  return `<svg viewBox="76 38 88 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${buildHead(stub, v)}</svg>`;
+}
+
 function renderIntro(){
   const chips = TRACK_ORDER.map(k=>{
     const v = TRACKS[k];
@@ -564,6 +614,11 @@ function renderIntro(){
     <h1>คุณเป็นคนยั่งยืนสายไหน?</h1>
     <p class="sub">8 คำถามง่าย ๆ เล่นสนุก ๆ ตอบตามสัญชาตญาณ แล้วมาดู “แผนที่พลัง” ของคุณว่าแต่ละด้านแข็งแรงแค่ไหน — เหมือนสเตตัสตัวละครในเกม</p>
     <div class="intro-art">${chips}</div>
+    <p class="pick-label">เลือกตัวละครของคุณ</p>
+    <div class="avatar-pick">
+      <button class="avatar-btn${avatar === 'm' ? ' picked' : ''}" data-v="m">${avatarPreview('m')}<span>ผู้ชาย</span></button>
+      <button class="avatar-btn${avatar === 'f' ? ' picked' : ''}" data-v="f">${avatarPreview('f')}<span>ผู้หญิง</span></button>
+    </div>
     <div class="actions" style="margin-top:0;">
       <button class="btn" id="startBtn">เริ่มทำแบบทดสอบ</button>
       <button class="btn ghost" id="fsBtn">${document.fullscreenElement ? 'ออกจากเต็มจอ' : 'เต็มจอ'}</button>
@@ -571,6 +626,12 @@ function renderIntro(){
   `;
   document.getElementById('startBtn').addEventListener('click', startQuiz);
   document.getElementById('fsBtn').addEventListener('click', toggleFullscreen);
+  document.querySelectorAll('.avatar-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      avatar = btn.dataset.v;
+      document.querySelectorAll('.avatar-btn').forEach(b=> b.classList.toggle('picked', b === btn));
+    });
+  });
   clearTimeout(idleTimer);
 }
 
@@ -647,7 +708,51 @@ function glassesShape(kind){
     </g>`;
 }
 
-function buildCharacter(t){
+// Women's hair needs a mass behind the face as well as a fringe over it, so
+// it is drawn in two passes with the face circle sandwiched between them.
+function backHair(kind){
+  if(kind === "tie"){
+    return `<circle cx="153" cy="76" r="15" fill="${HAIR}"/>
+      <rect x="140" y="82" width="9" height="7" rx="3" fill="#2a2e36"/>`;
+  }
+  return `<path d="M83,94 C83,52 97,42 120,42 C143,42 157,52 157,94 C157,116 154,132 150,145
+    C147,149 141,149 139,145 C143,131 145,114 145,98 L95,98 C95,114 97,131 101,145
+    C99,149 93,149 90,145 C86,132 83,116 83,94 Z" fill="${HAIR}"/>`;
+}
+
+function frontHair(kind){
+  return kind === "tie"
+    ? `<path d="M85,92 C83,56 98,46 120,46 C142,46 157,56 155,92 C152,81 148,71 138,68 C125,64 103,67 94,77 C89,82 86,87 85,92 Z" fill="${HAIR}"/>`
+    : `<path d="M84,92 C82,54 97,44 120,44 C143,44 158,54 156,92 C152,80 147,70 136,67 C119,63 100,68 92,78 C87,83 85,87 84,92 Z" fill="${HAIR}"/>`;
+}
+
+function buildHead(t, v){
+  const female = v === "f";
+  const brows = female
+    ? `<path d="M102,86.5 Q109,82.5 116,85.5" fill="none" stroke="${HAIR}" stroke-width="2.6" stroke-linecap="round"/>
+       <path d="M124,85.5 Q131,82.5 138,86.5" fill="none" stroke="${HAIR}" stroke-width="2.6" stroke-linecap="round"/>`
+    : `<rect x="102" y="84.5" width="14" height="3" rx="1.5" fill="${HAIR}"/>
+       <rect x="124" y="84.5" width="14" height="3" rx="1.5" fill="${HAIR}"/>`;
+  const earrings = female && t.hairF === "tie"
+    ? `<circle cx="84" cy="107" r="2.6" fill="#d9b06a"/><circle cx="156" cy="107" r="2.6" fill="#d9b06a"/>`
+    : "";
+  return `${female ? backHair(t.hairF) : ""}
+    <circle cx="84" cy="100" r="7.5" fill="${SKIN_SHADE}"/>
+    <circle cx="156" cy="100" r="7.5" fill="${SKIN_SHADE}"/>
+    <circle cx="120" cy="95" r="36" fill="${SKIN}"/>
+    <path d="M120,59 A36,36 0 0 1 120,131 Z" fill="${SKIN_SHADE}" opacity="0.35"/>
+    ${female ? frontHair(t.hairF) : hairShape(t.hair)}
+    ${earrings}
+    ${brows}
+    <circle cx="109" cy="96" r="3.4" fill="#2a2e36"/>
+    <circle cx="131" cy="96" r="3.4" fill="#2a2e36"/>
+    <path d="M120,99 L120,107 L124,108" fill="none" stroke="${SKIN_SHADE}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M109,114 Q120,124 131,114" fill="none" stroke="${female ? "#c2626e" : "#b5825a"}" stroke-width="2.5" stroke-linecap="round"/>
+    ${glassesShape(t.glasses)}`;
+}
+
+function buildCharacter(t, v){
+  const sl = v === "f" ? 87 : 84, sr = v === "f" ? 153 : 156;
   return `<svg viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ตัวละคร${t.name}">
     <circle cx="120" cy="165" r="150" fill="${t.tint}"/>
 
@@ -663,8 +768,8 @@ function buildCharacter(t){
 
     <rect x="108" y="110" width="24" height="38" fill="${SKIN_SHADE}"/>
 
-    <polygon points="84,144 156,144 152,213 88,213" fill="#ffffff" stroke="${SHIRT_LINE}" stroke-width="1.5" stroke-linejoin="round"/>
-    <polygon points="120,144 156,144 152,213 120,213" fill="#f1f4f8"/>
+    <polygon points="${sl},144 ${sr},144 152,213 88,213" fill="#ffffff" stroke="${SHIRT_LINE}" stroke-width="1.5" stroke-linejoin="round"/>
+    <polygon points="120,144 ${sr},144 152,213 120,213" fill="#f1f4f8"/>
     <polygon points="106,142 120,161 112,142" fill="#ffffff" stroke="${SHIRT_LINE}" stroke-width="1.5" stroke-linejoin="round"/>
     <polygon points="134,142 120,161 128,142" fill="#f1f4f8" stroke="${SHIRT_LINE}" stroke-width="1.5" stroke-linejoin="round"/>
     <path d="M120,161 L120,213" stroke="${SHIRT_LINE}" stroke-width="1.5"/>
@@ -688,18 +793,7 @@ function buildCharacter(t){
     <path d="M172,126 L190,104" stroke="${SKIN}" stroke-width="15" stroke-linecap="round"/>
     <circle cx="194" cy="100" r="11" fill="${SKIN}"/>
 
-    <circle cx="84" cy="100" r="7.5" fill="${SKIN_SHADE}"/>
-    <circle cx="156" cy="100" r="7.5" fill="${SKIN_SHADE}"/>
-    <circle cx="120" cy="95" r="36" fill="${SKIN}"/>
-    <path d="M120,59 A36,36 0 0 1 120,131 Z" fill="${SKIN_SHADE}" opacity="0.35"/>
-    ${hairShape(t.hair)}
-    <rect x="102" y="84.5" width="14" height="3" rx="1.5" fill="${HAIR}"/>
-    <rect x="124" y="84.5" width="14" height="3" rx="1.5" fill="${HAIR}"/>
-    <circle cx="109" cy="96" r="3.4" fill="#2a2e36"/>
-    <circle cx="131" cy="96" r="3.4" fill="#2a2e36"/>
-    <path d="M120,99 L120,107 L124,108" fill="none" stroke="${SKIN_SHADE}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M109,114 Q120,124 131,114" fill="none" stroke="#b5825a" stroke-width="2.5" stroke-linecap="round"/>
-    ${glassesShape(t.glasses)}
+    ${buildHead(t, v)}
 
     ${t.prop}
   </svg>`;
@@ -784,7 +878,7 @@ function renderResult(){
         <h2 class="result-title">${top.persona}</h2>
         <p class="result-track" style="color:${topColor}">${top.name}</p>
       </div>
-      <div class="character-wrap">${buildCharacter(top)}</div>
+      <div class="character-wrap">${buildCharacter(top, avatar)}</div>
       <div class="result-body">
         <p>${top.mission}</p>
         <p style="font-weight:600;">${top.help}</p>
