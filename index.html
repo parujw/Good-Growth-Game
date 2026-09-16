@@ -545,12 +545,13 @@ const QUESTIONS = [
   },
   {
     scenario:"ถ้าได้รับมอบหมายทำให้โครงการเพื่อให้ยั่งยืน คุณจะ...",
+    keepOrder:true,
     options:[
-      {t:"วางเป้าหมายและตัวชี้วัดให้ชัดก่อนเริ่ม", k:"planning"},
-      {t:"เริ่มจากสิ่งที่ลงมือทำได้ทันทีหน้างาน", k:"action"},
-      {t:"ชวนทีมมาช่วยกันคิดและลงมือไปด้วยกัน", k:"people"},
-      {t:"ทำให้คนเข้าใจว่าทำไมต้องทำ แล้วดึงให้มีส่วนร่วม", k:"story"},
-      {t:"วางระบบตรวจสอบให้โปร่งใสและปลอดภัยตั้งแต่ต้น", k:"guardian"}
+      {t:"โครงการธุรกิจนี่แหละ แค่นำราคาคาร์บอนมาประเมินความเสี่ยงด้วย", k:"planning"},
+      {t:"พัฒนาโครงการลดการใช้พลังงาน หรือก๊าซเรือนกระจก", k:"action"},
+      {t:"พัฒนาสกิลด้านความยั่งยืน", k:"people"},
+      {t:"ดึงคนเข้ามามีส่วนร่วมกับความยั่งยืนมากขึ้น", k:"story"},
+      {t:"ร่วมโครงการปลูกป่าล้านไร่", k:"guardian"}
     ]
   },
   {
@@ -590,6 +591,7 @@ TRACK_ORDER.forEach(k=>MAX_PER_TRACK[k]=0);
 QUESTIONS.forEach(q=>q.options.forEach(o=>MAX_PER_TRACK[o.k]++));
 
 let step = -1;
+let optionOrder = [];   // display order per question, drawn once per run
 let scores = {};
 TRACK_ORDER.forEach(k=>scores[k]=0);
 let answered = false;
@@ -651,9 +653,24 @@ function renderIntro(){
   clearTimeout(idleTimer);
 }
 
+function shuffled(n){
+  const a = [...Array(n).keys()];
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 function startQuiz(){
   step = 0;
   TRACK_ORDER.forEach(k=>scores[k]=0);
+  // Answers sit in track order, so a fixed layout lets people work out which
+  // choice feeds which result. Draw an order per question instead — once per
+  // run, so a re-render never reshuffles under the player's finger. Questions
+  // whose answers read as a list keep the order they were written in.
+  optionOrder = QUESTIONS.map(q =>
+    q.keepOrder ? [...Array(q.options.length).keys()] : shuffled(q.options.length));
   renderQuestion();
 }
 
@@ -675,10 +692,13 @@ function renderQuestion(){
       <p class="qnum">ข้อ ${step+1} / ${QUESTIONS.length}</p>
       <p class="scenario">${q.scenario}</p>
       <div class="options">
-        ${q.options.map((o,i)=>`<button class="opt" data-i="${i}">
-          <span class="opt-num" style="background:${TRACKS[o.k].color}">${i+1}</span>
+        ${optionOrder[step].map((oi,slot)=>{
+          const o = q.options[oi];
+          return `<button class="opt" data-i="${oi}">
+          <span class="opt-num" style="background:${TRACKS[o.k].color}">${slot+1}</span>
           <span class="opt-text">${o.t}</span>
-        </button>`).join('')}
+        </button>`;
+        }).join('')}
       </div>
     </div>
   `;
@@ -693,9 +713,9 @@ function pick(i){
   answered = true;
   const q = QUESTIONS[step];
   scores[q.options[i].k]++;
-  document.querySelectorAll('.opt').forEach((el,idx)=>{
+  document.querySelectorAll('.opt').forEach(el=>{
     el.disabled = true;
-    if(idx===i) el.classList.add('picked');
+    if(Number(el.dataset.i) === i) el.classList.add('picked');
   });
   setTimeout(()=>{
     step++;
