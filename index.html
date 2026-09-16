@@ -544,16 +544,6 @@ const QUESTIONS = [
     ]
   },
   {
-    scenario:"เห็นเพื่อนกำลังทำอะไรเสี่ยงอันตรายนิดหน่อย คุณจะ...",
-    options:[
-      {t:"คิดก่อนว่าผลที่ตามมาจะเป็นยังไง", k:"planning"},
-      {t:"รีบเข้าไปช่วยหยุดทันที", k:"action"},
-      {t:"ถามด้วยความห่วงใยว่าเขาโอเคไหม", k:"people"},
-      {t:"บอกทุกคนให้รู้ทั่วกันอย่างตรงไปตรงมา", k:"story"},
-      {t:"เตือนและจดไว้ให้ถูกต้องตามขั้นตอน", k:"guardian"}
-    ]
-  },
-  {
     scenario:"ถ้าได้รับมอบหมายทำให้โครงการเพื่อให้ยั่งยืน คุณจะ...",
     options:[
       {t:"วางเป้าหมายและตัวชี้วัดให้ชัดก่อนเริ่ม", k:"planning"},
@@ -647,7 +637,7 @@ function renderIntro(){
     <h1>คุณเป็นคนยั่งยืนสายไหน?</h1>
     <p class="sub">สนุกไปกับแบบทดสอบบุคลิกภาพความยั่งยืน เพื่อดูว่าคุณเป็นคนยั่งยืน<span class="nowrap">แบบไหน</span></p>
     <div class="meta-tags">
-      <span class="meta-tag">8 ข้อ</span>
+      <span class="meta-tag">${QUESTIONS.length} ข้อ</span>
       <span class="meta-tag">2 นาที</span>
     </div>
     <div class="intro-art">${chips}</div>
